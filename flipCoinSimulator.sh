@@ -38,7 +38,7 @@ function calculatePercentage()
 
 
 read -p "Enter how times you want to flip coin: " noOfFlip
-read -p "1)Singlet 2)Doublet Enter your choice: " choice
+read -p "1)Single Coin 2)Double Coin 3)Triple Coin Enter your choice: " choice
 case $choice in
 	1)
 		noOfCoin=1
