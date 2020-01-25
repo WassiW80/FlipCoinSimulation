@@ -34,8 +34,13 @@ function calculatePercentage()
 		echo "Percentage :	"${coinsDictionary[@]}
 }
 
-
-
+function winPercentage(){
+	echo "Win Combination Percentage"
+	for i in ${!coinsDictionary[@]}
+	do
+		echo "$i ${coinsDictionary[$i]}"
+	done | sort -k2 -rn | head -1
+}
 
 read -p "Enter how times you want to flip coin: " noOfFlip
 read -p "1)Single Coin 2)Double Coin 3)Triple Coin Enter your choice: " choice
@@ -44,16 +49,19 @@ case $choice in
 		noOfCoin=1
 		flipCoin $noOfFlip $noOfCoin
 		calculatePercentage
+		winPercentage
 		;;
 	2)
 		noOfCoin=2
 		flipCoin $noOfFlip $noOfCoin
 		calculatePercentage
+		winPercentage
 		;;
 	3)
 		noOfCoin=3
 		flipCoin $noOfFlip $noOfCoin
 		calculatePercentage
+		winPercentage
 		;;
 	*)
 		echo "Invalid Choice"
