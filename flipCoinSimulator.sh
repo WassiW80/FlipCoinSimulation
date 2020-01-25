@@ -1,22 +1,56 @@
-#!/bin/bash -x
+#!/bin/bash 
 declare -A coinsDictionary
-read -p "Enter how times you want to flip coin: " countOfCoin
 
 function flipCoin(){
-for((counter=0;counter<$countOfCoin;counter++))
+	for(( i=1;i<=$1;i++ ))
 	do
-		randomValue=$((RANDOM%2))
-		if [ $randomValue -eq 1 ]
-		then
-			 coinsDictionary[H]=$((++head))
-		else
-			 coinsDictionary[T]=$((++tail))
-		fi
+		side=""
+		for((j=1;j<=$2;j++))
+		do
+			randomValue=$((RANDOM%2))
+			if [ $randomValue -eq 1 ]
+			then
+				 side+=H
+			else
+				 side+=T
+			fi
+		done
+		updateCount $side
 	done
-	echo "Key :	 	"${!coinsDictionary[@]}
-	echo "Counts :	"${coinsDictionary[@]}
-	headPercentage=`echo "scale=2; ${coinsDictionary[H]}*100/$countOfCoin" | bc `
-	tailPercentage=`echo "scale=2; ${coinsDictionary[T]}*100/$countOfCoin" | bc `
-	echo "Percentage : " $headPercentage% $tailPercentage%
 }
-flipCoin
+
+function updateCount()
+{
+	coinsDictionary[$1]=$((${coinsDictionary[$1]}+1))
+}
+
+function calculatePercentage()
+{
+	for i in ${!coinsDictionary[@]}
+	do
+		coinsDictionary[$i]=`echo "scale=2; ${coinsDictionary[$i]}*100/$noOfFlip" | bc`
+	done
+		echo "Key :	 	"${!coinsDictionary[@]}
+		echo "Percentage :	"${coinsDictionary[@]}
+}
+
+
+
+
+read -p "Enter how times you want to flip coin: " noOfFlip
+read -p "1)Singlet 2)Doublet Enter your choice: " choice
+case $choice in
+	1)
+		noOfCoin=1
+		flipCoin $noOfFlip $noOfCoin
+		calculatePercentage
+		;;
+	2)
+		noOfCoin=2
+		flipCoin $noOfFlip $noOfCoin
+		calculatePercentage
+		;;
+	*)
+		echo "Invalid Choice"
+		;;
+esac
