@@ -50,6 +50,11 @@ case $choice in
 		flipCoin $noOfFlip $noOfCoin
 		calculatePercentage
 		;;
+	3)
+		noOfCoin=3
+		flipCoin $noOfFlip $noOfCoin
+		calculatePercentage
+		;;
 	*)
 		echo "Invalid Choice"
 		;;
